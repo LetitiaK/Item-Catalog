@@ -1,0 +1,15 @@
+.category-card {
+  width: 150px;
+  height: 150px;
+  box-shadow: 5px 10px 20px 8px rgba(219,219,219,1);
+  text-align: center;
+}
+
+.category-card--header {
+  padding-top: 20px;
+}
+
+/*Footer*/
+.navbar-bottom {
+  margin-top: 486px;
+}

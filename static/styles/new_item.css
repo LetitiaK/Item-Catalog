@@ -1,0 +1,30 @@
+.form--style {
+  width: 44%;
+  margin-bottom: 10px;
+}
+
+.explanation--font-style{
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+}
+
+/*Footer*/
+.navbar-bottom {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.footer--no-category {
+  margin-top: 476px;
+  height: 60px;
+  margin-left: -15px;
+  width: 1170px;
+}
+
+.footer--with-category {
+  margin-top: 10px;
+  height: 60px;
+  margin-left: -15px;
+  width: 1170px;
+}
