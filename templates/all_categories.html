@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Biggest collection of beautiful geeky stuff">
+    <meta name="author" content="Letitia Kernschmidt">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffccd8">
+    <title>The Luxury Geek</title>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Codystar" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/mainpage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/all_categories.css') }}">
+  </head>
+
+  <body>
+    <main class="container">
+      <header class="row">
+        <div class="col-sm-12 header--background">
+          <h1 class="header--font-style">The Classy Geek</h1>
+          <h4 class="h4--font-style">The biggest collection of geeky but classy items</h4>
+        </div>
+      </header>
+      <nav class="navbar navbar-inverse navbar--style">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li><a class="navbar--font-style" href="{{url_for('showHomepage')}}">Home</a></li>
+            <li><a href="{{url_for('showCategories')}}">All Categories</a></li>
+            <li><a href="{{url_for('newCategory')}}">Add a new Category</a></li>
+            <li><a href="{{url_for('newItem')}}">Add a new Item</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if status %}
+              <li><a href="{{url_for('gdisconnect')}}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            {% else %}
+              <li><a href="{{url_for('showLogin')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="pageheader--font-style">All Categories</h1>
+        </div>
+      </div>
+      <br>
+      {% if categories %}
+        <div class="row">
+          {% for category in categories %}
+            <div class="col-sm-2">
+                <div class="category-card">
+                  <a href="{{url_for('showCategory', category_id=category.id)}}"><h4 class="pageheader--font-style category-card--header">{{category.name}}</h4></a>
+                  <img src={{category.image_url}} height="90" width="90">
+                </div>
+                <br>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="pageheader--font-style">No category defined yet.</h3>
+          </div>
+        </div>
+      {% endif %}
+      <!-- Includes a footer -->
+      <footer class="row">
+          <div class="col-sm-12">
+            <div class="navbar-bottom">
+              <p class="text-center footer-text-bottom footer-text-top">&#xA9; 2017 Letitia Kernschmidt</p>
+            </div>
+          </div>
+      </footer>
+    </main>
+  </body>
+</html>

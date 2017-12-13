@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Biggest collection of beautiful geeky stuff">
+    <meta name="author" content="Letitia Kernschmidt">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffccd8">
+    <title>The Luxury Geek</title>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script async src="//apis.google.com/js/platform.js?onload=start"> </script>
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Codystar" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/mainpage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/all_categories.css') }}">
+  </head>
+  <body>
+    <main class="container">
+      <header class="row">
+        <div class="col-sm-12 header--background">
+          <h1 class="header--font-style">The Classy Geek</h1>
+          <h4 class="h4--font-style">The biggest collection of geeky but classy items</h4>
+        </div>
+      </header>
+      <nav class="navbar navbar-inverse navbar--style">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li><a class="navbar--font-style" href="{{url_for('showHomepage')}}">Home</a></li>
+            <li><a href="{{url_for('showCategories')}}">All Categories</a></li>
+            <li><a href="{{url_for('newCategory')}}">Add a new Category</a></li>
+            <li><a href="{{url_for('newItem')}}">Add a new Item</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="pageheader--font-style">Login</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="explanation--font-style">Please login to access all functionalities.</p>
+          <p id="result"></p>
+          <br>
+          <div id="signinButton">
+            <span class="g-signin"
+              data-scope="openid email"
+              data-clientid="707910858275-c0pammicp1i0his6vjs5l1qqkhfrgkrj.apps.googleusercontent.com"
+              data-redirecturi="postmessage"
+              data-accesstype="offline"
+              data-cookiepolicy="single_host_origin"
+              data-callback="signInCallback">
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Includes a footer -->
+      <footer class="row">
+          <div class="col-sm-12">
+            <div class="navbar-bottom">
+              <p class="text-center footer-text-bottom footer-text-top">&#xA9; 2017 Letitia Kernschmidt</p>
+            </div>
+          </div>
+      </footer>
+    </main>
+    <div id="result"></div>
+    <script>
+    function signInCallback(authResult) {
+      if (authResult['code']) {
+        // Hide the sign-in button now that the user is authorized
+        $('#signinButton').attr('style', 'display: none');
+        // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+        $.ajax({
+          type: 'POST',
+          url: '/gconnect?state={{STATE}}',
+          processData: false,
+          data: authResult['code'],
+          contentType: 'application/octet-stream; charset=utf-8',
+          success: function(result) {
+            // Handle or verify the server response if necessary.
+            if (result) {
+              $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+             setTimeout(function() {
+              window.location.href = "{{url_for('showHomepage')}}";
+            }, 2000);
+
+          } else if (authResult['error']) {
+        console.log('There was an error: ' + authResult['error']);
+      } else {
+            $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+             }
+          }
+
+      }); } }
+    </script>
+  </body>
+</html>
